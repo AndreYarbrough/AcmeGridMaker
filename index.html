@@ -27,18 +27,22 @@
         </form>
         <div id="gridContainer"></div>
         <script>
-        const isColInput=document.querySelector('[name="columns"]');
-        const isRowInput=document.querySelector('[name="rows"]');
+        const isColInput=document.querySelector('[name="xAxis"]');
+        const isRowInput=document.querySelector('[name="yAxis"]');
         const grid=document.querySelector('#gridContainer');
+        let gridItem=''
         //console.log(grid)
         gridInputForm.addEventListener('submit',(ev)=>{
          ev.preventDefault();
-         for(let i=0; i<=(isRowInput.value*1);i++){
-             render()
+         //console.log(isRowInput.value);
+         for(let i=0; i<(isRowInput.value*1);i++){
+           gridItem+=`<div class="grid-item"></div>`;  
          }
+         isRowInput.value=''
+         render();
      });
         const render = ()=>{
-         grid.innerHTML=`<div class="grid-item"></div>`;   
+         grid.innerHTML=gridItem;   
         };
         render();
         </script>    
