@@ -4,13 +4,43 @@
     </head>
     <body>
     <style>
+        #gridContainer{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: #2196F3;
+            padding: 10px;
+        }
+        .grid-item{
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            font-size: 30px;
+            text-align: center;
+        }
     </style>
      <div id='gridMakerForm'>
         <form id=gridInputForm>
             <h2>Acme Grid Maker</h2>
-              <input name="xAxis" id="xAxis" value>
-              <input name="yAxis" id="xAxis" value>
+              <input name="xAxis" id="columns" value>
+              <input name="yAxis" id="rows" value>
               <input type="submit" value="Create" id="submit">
-        </form>    
+        </form>
+        <div id="gridContainer"></div>
+        <script>
+        const isColInput=document.querySelector('[name="columns"]');
+        const isRowInput=document.querySelector('[name="rows"]');
+        const grid=document.querySelector('#gridContainer');
+        //console.log(grid)
+        gridInputForm.addEventListener('submit',(ev)=>{
+         ev.preventDefault();
+         for(let i=0; i<=(isRowInput.value*1);i++){
+             render()
+         }
+     });
+        const render = ()=>{
+         grid.innerHTML=`<div class="grid-item"></div>`;   
+        };
+        render();
+        </script>    
     </body>
 </html>
