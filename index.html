@@ -5,17 +5,15 @@
     <body>
     <style>
         #gridContainer{
-            display: grid;
-            grid-template-columns: auto auto;
-            grid-template-rows: auto auto;
-            padding: 10px;
+            display: flex;
+            
         }
-        .grid-item{
-            background-color: #2196F3;
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            font-size: 30px;
+        .cell{
+            border:solid 1px black;
+            width: 3rem;
+            height: 3rem;
             text-align: center;
+             
         }
     </style>
      <div id='gridMakerForm'>
@@ -26,26 +24,56 @@
               <input type="submit" value="Create" id="submit">
         </form>
         <div id="gridContainer"></div>
+
         <script>
         const isColInput=document.querySelector('[name="xAxis"]');
         const isRowInput=document.querySelector('[name="yAxis"]');
         const grid=document.querySelector('#gridContainer');
-        console.log(grid);
+        const sty=document.querySelector('style');
+        const data=[]
         let gridItem=''
         let colControl=''
         let rowControl=''
-        //console.log(grid)
+        
         gridInputForm.addEventListener('submit',(ev)=>{
          ev.preventDefault();
-         //console.log(isRowInput.value);
-         for(let i=0; i<(isRowInput.value*1);i++){
-           gridItem+=`<div class="grid-item"></div>`;  
-         }
-         isRowInput.value=''
+         rows=buildTable(isColInput.value,isRowInput.value);
+         gridItem=rows.map(row => `<div class="row">${row.map(cell=>`<div class='cell'>${ cell}</div>`).join('')}</div>`).join('');
+         isRowInput.value='';
+         isColInput.value='';
          render();
      });
+     grid.addEventListener('click', (ev)=>{
+        const cell = ev.target.style.backgroundColor = 'Orange';
+        //cell=`<div class='cell'style.backgroundColor = 'dodgerBlue'>${ cell}</div>`
+        //cell.style.backgroundColor = 'dodgerBlue';
+        
+          const row = cell.parentNode;
+          const cdx=[...row.children].indexOf(cell);
+          const rdx=[...row.parentNode.children].indexOf(row);
+          //const html = `rdx: ${rdx} cdx: ${cdx}`
+          //gridItem=`<div class='cell'style.backgroundColor = 'dodgerBlue'>${rdx} ${cdx}</div>`;
+          //gridContainer.innerHTML=html
+          //console.log(cdx);
+          //console.log(rdx);
+          console.log(cell);
+          console.log(row);
+          //console.log(gridItem)
+          render();   
+     });
+     const buildTable = (pCol, pRow)=>{
+            const rows=[];
+            for(let i=0;i<pCol;i++){
+             const row=[];
+            for(let j=0;j<pRow;j++){
+                 row.push(`${i}.${j}`)
+             }
+             rows.push(row)
+            }
+            return rows;
+        }
         const render = ()=>{
-         grid.innerHTML=gridItem;   
+        grid.innerHTML=gridItem;   
         };
         render();
         </script>    
